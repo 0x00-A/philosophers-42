@@ -6,48 +6,11 @@
 /*   By: aigounad <aigounad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 01:41:35 by aigounad          #+#    #+#             */
-/*   Updated: 2023/04/06 17:42:55 by aigounad         ###   ########.fr       */
+/*   Updated: 2023/04/06 18:16:14 by aigounad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	status(char *info, t_philo *ph, int i)
-{
-	static int	done;
-
-	sem_wait(ph->pa->sem_write);
-	if (done == 0)
-	{
-		printf("%ld %d %s\n", actual_time() - ph->start, ph->nbr, info);
-		if (i == 1)
-		{
-			done = 1;
-			return ;
-		}
-	}
-	sem_post(ph->pa->sem_write);
-}
-
-int	eat_sleep_think(t_philo *ph)
-{
-	sem_wait(ph->pa->sem_forks);
-	status("has taken a fork", ph, 0);
-	sem_wait(ph->pa->sem_forks);
-	status("has taken a fork", ph, 0);
-	status("is eating", ph, 0);
-	sem_wait(ph->sem_last_eat);
-	ph->last_eat = actual_time();
-	ph->eat_count++;
-	sem_post(ph->sem_last_eat);
-	usleep(ph->pa->t_to_eat * 1000);
-	sem_post(ph->pa->sem_forks);
-	sem_post(ph->pa->sem_forks);
-	status("is sleeping", ph, 0);
-	usleep(ph->pa->t_to_slp * 1000);
-	status("is thinking", ph, 0);
-	return (0);
-}
 
 void	*death_monitor(void *arg)
 {
@@ -112,7 +75,7 @@ void	routine(t_philo *ph)
 int	ft_init_process(t_data *data)
 {
 	pthread_t	tid;
-	int	i;
+	int			i;
 
 	if (data->a.must_eat > 0)
 	{
@@ -132,7 +95,7 @@ int	ft_init_process(t_data *data)
 			exit(0);
 		}
 		// usleep(100);
-		i++; 
+		i++;
 	}
 	return (0);
 }
@@ -141,6 +104,7 @@ int	main(int ac, char **av)
 {
 	t_data		data;
 	int			i;
+
 	if (ft_parse_input(ac, av))
 		return (1);
 	if (ft_init(&data, ac, av))
@@ -161,6 +125,6 @@ int	main(int ac, char **av)
 		kill(data.ph[i].pid, SIGKILL);
 		i++;
 	}
-	free(data.ph);
+	ft_free(&data);
 	return (0);
 }

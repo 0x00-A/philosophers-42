@@ -2,7 +2,7 @@ NAME = philo
 
 CC = cc
 CFLAGS = -pthread -Wall -Werror -Wextra -g
-CFILES = main.c utils.c parse_input.c init.c eat_sleep_think.c
+CFILES = main.c utils.c parse_input.c init.c eat_sleep_think.c free.c
 OBJECTS = $(CFILES:%.c=$(OBJ_DIR)/%.o)
 HEADER = src/philo.h
 SRC_DIR = src

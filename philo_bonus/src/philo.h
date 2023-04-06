@@ -1,5 +1,17 @@
-#ifndef philo_h
-# define philo_h
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aigounad <aigounad@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/06 18:18:22 by aigounad          #+#    #+#             */
+/*   Updated: 2023/04/06 18:18:54 by aigounad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef PHILO_H
+# define PHILO_H
 
 //includes
 # include <pthread.h>
@@ -10,8 +22,8 @@
 # include <stdlib.h>
 # include <sys/time.h>
 
-#include <fcntl.h>           /* For O_* constants */
-#include <sys/stat.h>
+# include <fcntl.h>           /* For O_* constants */
+# include <sys/stat.h>
 
 # define SEM_WRITE "/sem_write"
 # define SEM_FINISH "/sem_finish"
@@ -47,20 +59,21 @@ typedef struct s_philo{
 }	t_philo;
 
 typedef struct s_data{
-	t_philo 	*ph;
+	t_philo		*ph;
 	t_args		a;
 }	t_data;
 
 //prototypes
-long int	ft_atoi(const char *str);
-long int 	actual_time();
-int			ft_error(char *error);
-int			ft_parse_input(int ac, char **av);
-int			ft_init(t_data *data, int ac, char **av);
-int			ft_init_philos(t_data *data);
-void		generate_sem_name(char *dst, char *src, int i);
-void		ft_usleep(long int time_to_sleep);
-int			eat_sleep_think(t_philo *ph);
-void		status(char *info, t_philo *ph, int i);
+long int		ft_atoi(const char *str);
+long int		actual_time(void);
+int				ft_error(char *error);
+int				ft_parse_input(int ac, char **av);
+int				ft_init(t_data *data, int ac, char **av);
+int				ft_init_philos(t_data *data);
+void			generate_sem_name(char *src, char *dst, int j);
+void			ft_usleep(long int time_to_sleep);
+int				eat_sleep_think(t_philo *ph);
+void			status(char *info, t_philo *ph, int i);
+void			ft_free(t_data *data);
 
 #endif

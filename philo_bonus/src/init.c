@@ -6,7 +6,7 @@
 /*   By: aigounad <aigounad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 05:51:25 by aigounad          #+#    #+#             */
-/*   Updated: 2023/04/06 17:49:20 by aigounad         ###   ########.fr       */
+/*   Updated: 2023/04/06 18:12:43 by aigounad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	ft_init_semaphores(t_data *data)
 	if (data->a.sem_dead == SEM_FAILED)
 		return (ft_error("sem_open failed2"));
 	sem_unlink(SEM_FORK);
-	data->a.sem_forks = sem_open(SEM_FORK, O_CREAT | O_EXCL, SEM_PERMS, data->a.total);
+	data->a.sem_forks = sem_open(SEM_FORK, O_CREAT | O_EXCL, SEM_PERMS,
+			data->a.total);
 	if (data->a.sem_forks == SEM_FAILED)
 		return (ft_error("sem_open failed3"));
 	return (0);
@@ -31,7 +32,7 @@ int	ft_init_semaphores(t_data *data)
 
 int	ft_init_philos(t_data *data)
 {
-	int	i;
+	int		i;
 	char	sem_name[64];
 
 	i = 0;
@@ -42,13 +43,14 @@ int	ft_init_philos(t_data *data)
 		data->ph[i].eat_count = 0;
 		generate_sem_name(SEM_LAST_EAT, sem_name, i);
 		sem_unlink(sem_name);
-		data->ph[i].sem_last_eat = sem_open(sem_name, O_CREAT | O_EXCL, SEM_PERMS, 1);
+		data->ph[i].sem_last_eat = sem_open(sem_name, O_CREAT | O_EXCL,
+				SEM_PERMS, 1);
 		if (data->ph[i].sem_last_eat == SEM_FAILED)
 			return (ft_error("sem_open failed5"));
-		////////////////
 		generate_sem_name(SEM_FINISH, sem_name, i);
 		sem_unlink(sem_name);
-		data->ph[i].sem_finish = sem_open(sem_name, O_CREAT | O_EXCL, SEM_PERMS, 1);
+		data->ph[i].sem_finish = sem_open(sem_name, O_CREAT | O_EXCL,
+				SEM_PERMS, 1);
 		if (data->ph[i].sem_finish == SEM_FAILED)
 			return (ft_error("sem_open failed"));
 		sem_wait(data->ph[i].sem_finish);
@@ -67,11 +69,8 @@ int	ft_init(t_data *data, int ac, char **av)
 		data->a.must_eat = (int)ft_atoi(av[5]);
 	else
 		data->a.must_eat = -1;
-
-	///////////////////////////////////////////
 	if (ft_init_semaphores(data))
 		return (1);
 	sem_wait(data->a.sem_dead);
-	// data->ph->done = 0;
 	return (0);
 }
