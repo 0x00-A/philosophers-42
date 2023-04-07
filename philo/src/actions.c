@@ -13,14 +13,19 @@
 #include "philo.h"
 
 void	status(char *s, t_philo *ph, int i);
-int		case_one(t_philo *ph);
-int		pick_up_forks(t_philo *ph);
 
-int	eat_sleep_think_repeat(t_philo *ph)
+int	eat_sleep_think(t_philo *ph)
 {
+	pthread_mutex_lock(&ph->l_fork);
+	status("has taken a fork", ph, 0);
 	if (ph->pa->total == 1)
-		return (case_one(ph));
-	pick_up_forks(ph);
+	{
+		pthread_mutex_unlock(&ph->l_fork);
+		usleep(ph->pa->t_to_die * 1000);
+		return (1);
+	}
+	pthread_mutex_lock(ph->r_fork);
+	status("has taken a fork", ph, 0);
 	status("is eating", ph, 0);
 	ph->meals_count++;
 	pthread_mutex_lock(&ph->lock);
@@ -49,36 +54,4 @@ void	status(char *s, t_philo *ph, int i)
 		}
 	}
 	pthread_mutex_unlock(&ph->pa->write);
-}
-
-int	case_one(t_philo *ph)
-{
-	pthread_mutex_lock(&ph->l_fork);
-	status("has taken a fork", ph, 0);
-	usleep(ph->pa->t_to_die * 1000);
-	pthread_mutex_unlock(&ph->l_fork);
-	return (1);
-}
-
-int	pick_up_forks(t_philo *ph)
-{
-	// if ((ph->philo_nb) % 2 == 0 && ph->philo_nb + 1 != ph->pa->total)
-	// {
-	// 	pthread_mutex_lock(ph->r_fork);
-	// 	status("has taken a fork", ph);
-	// 	pthread_mutex_lock(&ph->l_fork);
-	// 	status("has taken a fork", ph);
-	// }
-	// else
-	// {
-	// 	pthread_mutex_lock(&ph->l_fork);
-	// 	status("has taken a fork", ph);
-	// 	pthread_mutex_lock(ph->r_fork);
-	// 	status("has taken a fork", ph);
-	// }
-	pthread_mutex_lock(&ph->l_fork);
-	status("has taken a fork", ph, 0);
-	pthread_mutex_lock(ph->r_fork);
-	status("has taken a fork", ph, 0);
-	return (0);
 }

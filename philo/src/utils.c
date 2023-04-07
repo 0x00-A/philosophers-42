@@ -29,18 +29,3 @@ long int	actual_time(void)
 	time = (curr_time.tv_sec * 1000) + (curr_time.tv_usec / 1000);
 	return (time);
 }
-
-void	ft_usleep(long int time_to_sleep)
-{
-	long int	elapsed_time;
-	long int	start_time;
-
-	start_time = actual_time();
-	elapsed_time = 0;
-	while (elapsed_time < time_to_sleep)
-	{
-		usleep(time_to_sleep / 10);
-		elapsed_time = actual_time() - start_time;
-	}
-}
-

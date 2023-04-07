@@ -50,10 +50,9 @@ int	ft_init_philos(t_data *data)
 		generate_sem_name(SEM_FINISH, sem_name, i);
 		sem_unlink(sem_name);
 		data->ph[i].sem_finish = sem_open(sem_name, O_CREAT | O_EXCL,
-				SEM_PERMS, 1);
+				SEM_PERMS, 0);
 		if (data->ph[i].sem_finish == SEM_FAILED)
 			return (ft_error("sem_open failed"));
-		sem_wait(data->ph[i].sem_finish);
 		i++;
 	}
 	return (0);

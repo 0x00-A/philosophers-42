@@ -21,9 +21,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/time.h>
-
-# include <fcntl.h>           /* For O_* constants */
-# include <sys/stat.h>
+# include <fcntl.h>
 
 # define SEM_WRITE "/sem_write"
 # define SEM_FINISH "/sem_finish"
@@ -71,7 +69,6 @@ int				ft_parse_input(int ac, char **av);
 int				ft_init(t_data *data, int ac, char **av);
 int				ft_init_philos(t_data *data);
 void			generate_sem_name(char *src, char *dst, int j);
-void			ft_usleep(long int time_to_sleep);
 int				eat_sleep_think(t_philo *ph);
 void			status(char *info, t_philo *ph, int i);
 void			ft_free(t_data *data);

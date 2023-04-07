@@ -72,12 +72,12 @@ void	routine(t_philo *ph)
 	}
 }
 
-int	ft_init_process(t_data *data)
+int	ft_create_process(t_data *data)
 {
 	pthread_t	tid;
 	int			i;
 
-	if (data->a.must_eat > 0)
+	if (data->a.must_eat > 0 && data->a.total > 1)
 	{
 		if (pthread_create(&tid, NULL, &monitor_finish, data) != 0)
 			return (ft_error("pthread_creat error"));
@@ -94,7 +94,7 @@ int	ft_init_process(t_data *data)
 			routine(&data->ph[i]);
 			exit(0);
 		}
-		// usleep(100);
+		usleep(100);
 		i++;
 	}
 	return (0);
@@ -105,14 +105,12 @@ int	main(int ac, char **av)
 	t_data		data;
 	int			i;
 
-	if (ft_parse_input(ac, av))
-		return (1);
-	if (ft_init(&data, ac, av))
+	if (ft_parse_input(ac, av) || ft_init(&data, ac, av))
 		return (1);
 	data.ph = malloc(sizeof(t_philo) * data.a.total);
 	if (!data.ph)
 		return (ft_error("malloc error"));
-	if (ft_init_philos(&data) || ft_init_process(&data))
+	if (ft_init_philos(&data) || ft_create_process(&data))
 	{
 		free(data.ph);
 		return (1);

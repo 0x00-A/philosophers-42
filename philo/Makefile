@@ -27,5 +27,4 @@ fclean: clean
 
 re: fclean all
 
-norm:
-	norminette *
+.PHONY: clean fclean

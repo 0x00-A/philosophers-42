@@ -22,9 +22,6 @@
 # include <time.h>
 # include <sys/time.h>
 
-# define TRUE 1
-# define FALSE 0
-
 typedef struct s_args{
 	int				total;
 	long int		t_to_die;
@@ -56,13 +53,11 @@ typedef struct s_data{
 int				ft_parse_input(int ac, char **av);
 long int		ft_atoi(const char *str);
 int				ft_error(char *error);
-int				eat_sleep_think_repeat(t_philo *ph);
-void			ft_usleep(long int time_to_sleep);
+int				eat_sleep_think(t_philo *ph);
 long int		actual_time(void);
 void			ft_init_args(int ac, char **av, t_data *data);
 int				ft_init_philos(t_data *data);
 int				ft_create_threads(t_data *data);
-int				ft_pthread_join(t_data *data);
 void			*routine(void *arg);
 void			*check_finish(void *arg);
 

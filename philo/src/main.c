@@ -63,14 +63,13 @@ void	*routine(void *arg)
 	pthread_detach(thr_id);
 	while (1)
 	{
-		if (eat_sleep_think_repeat(ph))
+		if (eat_sleep_think(ph))
 			break ;
 		if (ph->meals_count == ph->pa->each_must_eat)
 		{
 			pthread_mutex_lock(&ph->pa->lock);
 			ph->pa->done++;
 			pthread_mutex_unlock(&ph->pa->lock);
-			// usleep(1000);
 		}
 	}
 	return (arg);

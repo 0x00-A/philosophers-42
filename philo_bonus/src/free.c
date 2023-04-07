@@ -15,22 +15,14 @@
 void	ft_free(t_data *data)
 {
 	int		i;
-	char	sem_name[64];
 
-	sem_unlink(SEM_DEAD);
-	sem_unlink(SEM_WRITE);
-	sem_unlink(SEM_FORK);
 	sem_close(data->a.sem_dead);
 	sem_close(data->a.sem_forks);
 	sem_close(data->a.sem_write);
 	i = 0;
 	while (i < data->a.total)
 	{
-		generate_sem_name(SEM_FINISH, sem_name, i);
-		sem_unlink(sem_name);
 		sem_close(data->ph[i].sem_finish);
-		generate_sem_name(SEM_LAST_EAT, sem_name, i);
-		sem_unlink(sem_name);
 		sem_close(data->ph[i].sem_last_eat);
 		i++;
 	}
