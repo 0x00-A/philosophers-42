@@ -3,7 +3,6 @@
 *.swp
 *.swo
 *.out
-# philo
-.DS_Store
+**/.DS_Store
 .vscode/
 **/*.o
