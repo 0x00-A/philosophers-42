@@ -6,7 +6,7 @@
 /*   By: aigounad <aigounad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 10:27:04 by aigounad          #+#    #+#             */
-/*   Updated: 2023/04/06 16:27:22 by aigounad         ###   ########.fr       */
+/*   Updated: 2023/04/08 13:19:19 by aigounad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_create_threads(t_data *data)
 		if (pthread_create(&thr_id, NULL, &routine, &data->ph[i]) != 0)
 			return (ft_error("pthread create error"));
 		pthread_detach(thr_id);
-		usleep(100);
+		// usleep(100);
 		i++;
 	}
 	return (0);

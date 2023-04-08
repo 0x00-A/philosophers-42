@@ -19,7 +19,7 @@ int	ft_init_semaphores(t_data *data)
 	if (data->a.sem_write == SEM_FAILED)
 		return (ft_error("sem_open failed1"));
 	sem_unlink(SEM_DEAD);
-	data->a.sem_dead = sem_open(SEM_DEAD, O_CREAT | O_EXCL, SEM_PERMS, 1);
+	data->a.sem_dead = sem_open(SEM_DEAD, O_CREAT | O_EXCL, SEM_PERMS, 0);
 	if (data->a.sem_dead == SEM_FAILED)
 		return (ft_error("sem_open failed2"));
 	sem_unlink(SEM_FORK);
@@ -70,6 +70,5 @@ int	ft_init(t_data *data, int ac, char **av)
 		data->a.must_eat = -1;
 	if (ft_init_semaphores(data))
 		return (1);
-	sem_wait(data->a.sem_dead);
 	return (0);
 }

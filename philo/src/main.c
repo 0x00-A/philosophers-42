@@ -6,7 +6,7 @@
 /*   By: aigounad <aigounad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 22:26:47 by aigounad          #+#    #+#             */
-/*   Updated: 2023/04/06 16:28:25 by aigounad         ###   ########.fr       */
+/*   Updated: 2023/04/08 13:19:49 by aigounad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ void	*check_death(void *arg)
 		if (actual_time() > ph->t_lst_meal + ph->pa->t_to_die)
 		{
 			status("died", ph, 1);
-			pthread_mutex_unlock(&ph->lock);
 			pthread_mutex_unlock(&ph->pa->dead);
+			pthread_mutex_unlock(&ph->lock);
 		}
 		pthread_mutex_unlock(&ph->lock);
-		usleep(1000);
+		usleep(5000);
 	}
 	return (arg);
 }
