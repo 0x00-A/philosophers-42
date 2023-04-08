@@ -6,7 +6,7 @@
 /*   By: aigounad <aigounad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 01:41:35 by aigounad          #+#    #+#             */
-/*   Updated: 2023/04/06 18:16:14 by aigounad         ###   ########.fr       */
+/*   Updated: 2023/04/08 14:19:38 by aigounad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	*death_monitor(void *arg)
 			return (NULL);
 		}
 		sem_post(ph->sem_last_eat);
-		usleep(1000);
+		usleep(5000);
 	}
 	return (NULL);
 }
@@ -66,7 +66,6 @@ void	routine(t_philo *ph)
 		if (ph->eat_count == ph->pa->must_eat)
 		{
 			sem_post(ph->sem_finish);
-			return ;
 		}
 		sem_post(ph->sem_last_eat);
 	}

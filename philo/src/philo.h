@@ -6,7 +6,7 @@
 /*   By: aigounad <aigounad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:34:59 by aigounad          #+#    #+#             */
-/*   Updated: 2023/04/05 17:47:15 by aigounad         ###   ########.fr       */
+/*   Updated: 2023/04/08 13:40:48 by aigounad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,18 @@ typedef struct s_args{
 	long int		t_to_eat;
 	long int		t_to_sleep;
 	long int		each_must_eat;
-	pthread_mutex_t	lock;
-	int				done;
 	pthread_mutex_t	dead;
 	pthread_mutex_t	write;
 }	t_args;
 
 typedef struct s_philo{
-	pthread_mutex_t	lock;
 	int				philo_nb;
 	t_args			*pa;
 	pthread_mutex_t	l_fork;
 	pthread_mutex_t	*r_fork;
+	pthread_mutex_t	finish;
 	int				meals_count;
+	pthread_mutex_t	lock;
 	long int		t_lst_meal;
 	long int		t_start;
 }	t_philo;

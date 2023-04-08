@@ -1,4 +1,4 @@
-NAME = philo
+NAME = philo_bonus
 
 CC = cc
 CFLAGS = -pthread -Wall -Werror -Wextra -g

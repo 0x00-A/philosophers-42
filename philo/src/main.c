@@ -6,7 +6,7 @@
 /*   By: aigounad <aigounad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 22:26:47 by aigounad          #+#    #+#             */
-/*   Updated: 2023/04/08 13:19:49 by aigounad         ###   ########.fr       */
+/*   Updated: 2023/04/08 14:14:43 by aigounad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,17 @@
 void	*check_finish(void *arg)
 {
 	t_data	*data;
+	int		i;
 
+	i = 0;
 	data = (t_data *)arg;
-	while (1)
+	while (i < data->arg.total)
 	{
-		pthread_mutex_lock(&data->arg.lock);
-		if (data->arg.done == data->arg.total)
-		{
-			pthread_mutex_unlock(&data->arg.lock);
-			pthread_mutex_unlock(&data->arg.dead);
-			return (NULL);
-		}
-		pthread_mutex_unlock(&data->arg.lock);
+		pthread_mutex_lock(&data->ph[i].finish);
+		pthread_mutex_unlock(&data->ph[i].finish);
+		i++;
 	}
+	pthread_mutex_unlock(&data->arg.dead);
 	return (NULL);
 }
 
@@ -67,12 +65,10 @@ void	*routine(void *arg)
 			break ;
 		if (ph->meals_count == ph->pa->each_must_eat)
 		{
-			pthread_mutex_lock(&ph->pa->lock);
-			ph->pa->done++;
-			pthread_mutex_unlock(&ph->pa->lock);
+			pthread_mutex_unlock(&ph->finish);
 		}
 	}
-	return (arg);
+	return (NULL);
 }
 
 void	ft_free(t_data *data)
@@ -81,12 +77,12 @@ void	ft_free(t_data *data)
 
 	pthread_mutex_destroy(&data->arg.dead);
 	pthread_mutex_destroy(&data->arg.write);
-	pthread_mutex_destroy(&data->arg.lock);
 	i = 0;
 	while (i < data->arg.total)
 	{
-		pthread_mutex_destroy(&data->ph->l_fork);
-		pthread_mutex_destroy(&data->ph->lock);
+		pthread_mutex_destroy(&data->ph[i].l_fork);
+		pthread_mutex_destroy(&data->ph[i].lock);
+		pthread_mutex_destroy(&data->ph[i].finish);
 		i++;
 	}
 	free(data->ph);

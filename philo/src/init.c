@@ -6,7 +6,7 @@
 /*   By: aigounad <aigounad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 10:13:30 by aigounad          #+#    #+#             */
-/*   Updated: 2023/04/05 16:11:21 by aigounad         ###   ########.fr       */
+/*   Updated: 2023/04/08 14:16:32 by aigounad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@ void	ft_init_args(int ac, char **av, t_data *data)
 		data->arg.each_must_eat = -1;
 	pthread_mutex_init(&data->arg.write, NULL);
 	pthread_mutex_init(&data->arg.dead, NULL);
-	pthread_mutex_init(&data->arg.lock, NULL);
 	pthread_mutex_lock(&data->arg.dead);
-	data->arg.done = 0;
 }
 
 int	ft_init_philos(t_data *data)
@@ -40,9 +38,10 @@ int	ft_init_philos(t_data *data)
 		data->ph[i].philo_nb = i + 1;
 		data->ph[i].meals_count = 0;
 		data->ph[i].t_start = actual_time();
-		data->ph[i].t_lst_meal = actual_time();
 		pthread_mutex_init(&data->ph[i].lock, NULL);
 		pthread_mutex_init(&data->ph[i].l_fork, NULL);
+		pthread_mutex_init(&data->ph[i].finish, NULL);
+		pthread_mutex_lock(&data->ph[i].finish);
 		if (data->arg.total == 1)
 			return (0);
 		if (i == data->arg.total - 1)
