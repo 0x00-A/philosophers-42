@@ -6,7 +6,7 @@
 /*   By: aigounad <aigounad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 22:26:47 by aigounad          #+#    #+#             */
-/*   Updated: 2023/04/08 14:14:43 by aigounad         ###   ########.fr       */
+/*   Updated: 2023/04/09 12:48:56 by aigounad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ void	*routine(void *arg)
 		if (ph->meals_count == ph->pa->each_must_eat)
 		{
 			pthread_mutex_unlock(&ph->finish);
+			pthread_mutex_lock(&ph->lock);
+			return (NULL);
 		}
 	}
 	return (NULL);
